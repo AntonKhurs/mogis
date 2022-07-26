@@ -1,0 +1,76 @@
+@import '../../../../variables.scss';
+
+:host.app-header {
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0); 
+  box-shadow: 0px -2px 10px 0px #000000;
+}
+
+.app-header-button {
+  height: 80px;
+  width: 80px;
+  background: none;
+  border: none;
+  margin: auto 0px auto 0px;
+}
+
+.app-header-button:hover {
+  cursor: pointer;
+  background-color: #D6EAF8;
+}
+
+mark {
+  -webkit-animation: 1s highlight 1s 1 normal forwards;
+          animation: 1s highlight 1s 1 normal forwards;
+  background-color: none;
+  background: linear-gradient(90deg, $base-color 50%, rgba(255, 255, 255, 0) 50%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+}
+
+@-webkit-keyframes highlight {
+  to {
+    background-position: 0 0;
+  }
+}
+
+@keyframes highlight {
+  to {
+    background-position: 0 0;
+  }
+}
+
+.caret {
+  width: 0;
+  border-left: .1em solid black;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-animation: blink-caret 1.1s step-end infinite;
+  -moz-animation: blink-caret 1.1s step-end infinite;
+  display: inline-flex;
+  height: 30px;
+  align-items: center;
+}
+
+@-webkit-keyframes blink-caret {
+  from , to { 
+    border-color:transparent;
+  }
+  50% {
+    border-color:white;
+  }
+}
+@keyframes blink-caret {
+  from , to {
+    border-color:transparent;
+  }
+  50% {
+    border-color:white;
+  }
+}
