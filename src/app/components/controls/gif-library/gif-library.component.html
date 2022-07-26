@@ -1,0 +1,29 @@
+<h2 *ngIf="savedGifsService.savedGifs && savedGifsService.savedGifs.length">Wow, nice taste bro!</h2>
+
+<ul *ngIf="savedGifsService.savedGifs && savedGifsService.savedGifs.length"
+    class="app-saved-gifs-list">
+  <li *ngFor="let item of savedGifsService.savedGifs"
+      class="app-saved-gif"
+      [style.max-width.px]="item.preview_width">
+    <span [style.max-width.px]="item.preview_width"
+          title="{{item.title}}">
+      {{item.title}}
+    </span>
+    <img src="{{item.preview_url}}"
+         title="fixed_height"
+         style="border-radius: 0px 0px 5px 5px;"
+         alt="fixed_height">
+    <button (click)="deleteGif(item)"
+            class="app-saved-gif-delete-button">
+      <span class="material-symbols-outlined">
+        delete
+      </span>
+    </button>
+    <button (click)="downloadGif(item)"
+            class="app-saved-gif-download-button">
+      <span class="material-symbols-outlined">
+        download
+      </span>
+    </button>
+  </li>
+</ul>
