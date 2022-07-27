@@ -1,9 +1,44 @@
-<h2 *ngIf="savedGifsService.savedGifs && savedGifsService.savedGifs.length">Wow, nice taste bro!</h2>
+<h2 *ngIf="savedGifsService.rawSavedGifs && savedGifsService.rawSavedGifs.length">Wow, nice taste bro!</h2>
 
-<ul *ngIf="savedGifsService.savedGifs && savedGifsService.savedGifs.length"
+<div *ngIf="savedGifsService.rawSavedGifs && savedGifsService.rawSavedGifs.length"
+     class="app-saved-gifs-sort-filter">
+  <input type="search"
+            name="queryInput"
+            id="queryInput"
+            class="app-giphy-search-input"
+            placeholder="Enter GIF query..."
+            [(ngModel)]="savedGifsService.filter"
+            (ngModelChange)="savedGifsService.applySortAndFilter();">
+  <div class="app-saved-gifs-sort">
+    <label>Sort:</label>
+    <button (click)="setSort('title')"
+            [ngClass]="savedGifsService.sort === 'title' ? 'active' : ''">
+        <span>title</span>
+        <span class="material-symbols-outlined icon" *ngIf="savedGifsService.sort === 'title' && savedGifsService.sortDir === 'asc'">
+          expand_more
+        </span>
+        <span class="material-symbols-outlined icon" *ngIf="savedGifsService.sort === 'title' && savedGifsService.sortDir === 'desc'">
+          expand_less
+        </span>
+    </button>
+    <button (click)="setSort('save_date')"
+            [ngClass]="savedGifsService.sort === 'save_date' ? 'active' : ''">
+        <span>save date</span>
+        <span class="material-symbols-outlined icon" *ngIf="savedGifsService.sort === 'save_date' && savedGifsService.sortDir === 'asc'">
+          expand_more
+        </span>
+        <span class="material-symbols-outlined icon" *ngIf="savedGifsService.sort === 'save_date' && savedGifsService.sortDir === 'desc'">
+          expand_less
+        </span>
+    </button>
+  </div>
+</div>
+
+<ul *ngIf="savedGifsService.rawSavedGifs && savedGifsService.rawSavedGifs.length"
     class="app-saved-gifs-list">
-  <li *ngFor="let item of savedGifsService.savedGifs"
+  <li *ngFor="let item of savedGifsService.processedSavedGifs"
       class="app-saved-gif"
+      @fadeOut
       [style.max-width.px]="item.preview_width">
     <span [style.max-width.px]="item.preview_width"
           title="{{item.title}}">
