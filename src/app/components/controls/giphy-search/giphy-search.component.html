@@ -1,6 +1,4 @@
 <div class="app-giphy-search-query">
-  <label for="queryInput"
-         class="app-giphy-search-label">What kind of GIF are looking for now</label>
   <div style="position: relative; width: min-content; margin-top: 5px;">
     <input type="search"
             name="queryInput"
@@ -21,9 +19,12 @@
 
 <ul class="app-giphy-search-results"
     (scroll)="onListScroll($event)"
+    #appGiphySearchResults
     *ngIf="giphyService.gifList && giphyService.gifList.length">
   <li *ngFor="let gif of giphyService.gifList"
       class="app-giphy-found-gif"
+      @fadeOut
+      (@fadeOut.done)="onFadeOutDone(appGiphySearchResults)"
       [style.max-width.px]="gif.images.fixed_height.width">
     <span [style.max-width.px]="gif.images.fixed_height.width"
           title="{{gif.title}}">
@@ -33,7 +34,7 @@
          title="fixed_height"
          style="border-radius: 0px 0px 5px 5px;"
          alt="fixed_height">
-    <button (click)="saveGif(gif)"
+    <button (click)="saveGif(gif, appGiphySearchResults)"
             class="app-giphy-save-button">
       <span class="material-symbols-outlined">
         save

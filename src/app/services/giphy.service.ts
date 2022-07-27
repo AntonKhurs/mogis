@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry, take } from 'rxjs/operators';
 
 import { giphyGif } from '../models/interfaces/giphy/giphy-gif';
+import { giphySearchResponse } from '../models/interfaces/giphy/giphy-search-response';
 import { SavedGifsService } from './saved-gifs.service';
 
 @Injectable({
@@ -35,28 +36,33 @@ export class GiphyService {
       return;
     }
 
-    this.isRequesting = true;
+    
 
     if (query !== this.lastQuery) {
       this.gifList = [];
       this.pagination = null;
     }
 
+    this.isRequesting = true;
+    this.lastQuery = query;
+
     const limitStr = `&limit=${limit}`;
     const offsetStr = this.pagination ? `&offset=${this.pagination.count + this.pagination.offset}` : '';
 
     let url: string = `${this.searchApiEndpoint}&q=${query}${limitStr}${offsetStr}`;
 
-    this.lastQuery = query;
-
-    console.log(url);
-
-    let obs = this.httpClient.get<any>(url, this.httpOptions).pipe(catchError(this.errorHandler));
+    let obs = this.httpClient.get<giphySearchResponse>(url, this.httpOptions).pipe(catchError(this.errorHandler));
 
     obs.subscribe(
       resp => {
         if (resp && resp.data && resp.data.length) {
-          const filteredData = resp.data.filter((x: { id: string; }) => { return this.savedGifsService.savedGifs.findIndex(y => y.id === x.id) == -1 });
+
+          const filteredData = resp.data.filter(
+            (x: { id: string; }) => { 
+              return this.savedGifsService.rawSavedGifs.findIndex(y => y.id === x.id) == -1 
+            }
+          );
+
           this.gifList = this.gifList.concat(filteredData);
           this.pagination = resp.pagination;
           this.isRequesting = false;
