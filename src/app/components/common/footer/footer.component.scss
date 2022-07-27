@@ -8,11 +8,15 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-content: center;
-  justify-content: space-around;
+  justify-content: flex-end;
   box-shadow: 0px 2px 10px 0px #000000;
 }
 
 :host a {
   display: flex;
   align-items: center;
+}
+
+:host > span {
+  padding-right: 15px;
 }

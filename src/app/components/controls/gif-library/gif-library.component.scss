@@ -31,10 +31,10 @@
   text-overflow: ellipsis;
   font-size: 12px;
   font-weight: bold;
-  background-color: #C5FF74;
+  background-color: $second-color;
   width: calc(100% - 12px);
   text-align: center;
-  border-radius: 5px;
+  border-radius: 5px 5px 0px 0px;
   padding-top: 5px;
   padding-left: 7px;
   padding-right: 5px;
@@ -70,8 +70,7 @@
 
 .app-saved-gif-delete-button > span,
 .app-saved-gif-download-button > span {
-  color: #666;
-  background-color: $second-color;
+  color: rgb(58, 58, 58);
   border-radius: 50%;
   font-size: 22px;
   width: 30px;
@@ -81,9 +80,57 @@
   align-items: baseline;
 }
 
+.app-saved-gif-delete-button > span {
+  background-color: $red-color;
+}
+
+.app-saved-gif-download-button > span {
+  background-color: $base-color;
+}
+
 .app-saved-gif img {
   border-radius: 0px 0px 5px 5px;
   max-width: 500px;
   height: 200px;
   object-fit: cover;
+}
+
+.app-saved-gifs-sort {
+  margin-left: 20px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.app-saved-gifs-sort .app-saved-gifs-sort-wrapper {
+  text-align: center;
+}
+
+.app-saved-gifs-sort button {
+  border: none;
+  height: 25px;
+  background-color: #c4c4c4;
+  color: #efefef;
+  border-radius: 12px;
+  margin-left: 8px;
+  box-shadow: 1px 1px 4px 0px #000000;
+}
+
+.app-saved-gifs-sort button.active {
+  background-color: $second-color;
+  color: #1e1e1e;
+}
+
+.app-saved-gifs-sort button div {
+  height: 25px;
+}
+
+.app-saved-gifs-sort button span {
+  font-size: 15px;
+  height: 25px;
+  line-height: 25px;
+  float: left;
+}
+
+.app-saved-gifs-sort button span.icon {
+  font-size: 22px;
 }
