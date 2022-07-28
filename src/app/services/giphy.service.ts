@@ -33,10 +33,8 @@ export class GiphyService {
   }
 
   public getGifs(query: string = '', limit: number = 15) {
-    console.log('getGifs ->');
 
     if (this.isRequesting && query === this.lastQuery) {
-      console.log('this.isRequesting && query === this.lastQuery');
       return;
     }
 
@@ -47,7 +45,6 @@ export class GiphyService {
     }
 
     if (this.isFetchedAll) {
-      console.log('this.isFetchedAll');
       return;
     }
 
@@ -64,7 +61,6 @@ export class GiphyService {
       // in this case we've already fetched all the gifs for current query, so nothing to do here
       if (limit === 0) {
         this.isFetchedAll = true;
-        console.log('limit === 0');
         return;
       }
     } else {

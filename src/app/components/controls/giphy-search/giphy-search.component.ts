@@ -47,7 +47,6 @@ export class GiphySearchComponent implements OnInit {
   }
 
   onWheel(event: any): void {
-    console.log(event);
     this.searchResultsEl.nativeElement.scrollLeft += event.deltaY;
     event.preventDefault();
   }

@@ -86,7 +86,6 @@ export class SavedGifsService {
   }
 
   private saveSortAndFilter() {
-    console.log(this.sort);
     let json = JSON.stringify({ sort: this.sort, sortDir: this.sortDir });
 
     localStorage.setItem(this.lsSort, json);
