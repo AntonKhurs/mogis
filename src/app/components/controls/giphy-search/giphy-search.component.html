@@ -19,6 +19,7 @@
 
 <ul class="app-giphy-search-results"
     (scroll)="onListScroll($event)"
+    (wheel)="onWheel($event)"
     #appGiphySearchResults
     *ngIf="giphyService.gifList && giphyService.gifList.length">
   <li *ngFor="let gif of giphyService.gifList"

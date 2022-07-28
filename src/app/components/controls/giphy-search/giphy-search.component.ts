@@ -1,5 +1,5 @@
 import { trigger, transition, query, style, stagger, animate, state } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { giphyGif } from 'src/app/models/interfaces/giphy/giphy-gif';
 import { GiphyService } from 'src/app/services/giphy.service';
 import { SavedGifsService } from 'src/app/services/saved-gifs.service';
@@ -18,6 +18,8 @@ import { SavedGifsService } from 'src/app/services/saved-gifs.service';
 })
 export class GiphySearchComponent implements OnInit {
 
+  @ViewChild('appGiphySearchResults') searchResultsEl: any;
+  
   public query: string = '';
 
   constructor(public giphyService: GiphyService,
@@ -25,12 +27,6 @@ export class GiphySearchComponent implements OnInit {
 
   public callGifSearch() {
     this.giphyService.getGifs(this.query);
-  }
-
-  public onListScroll(e: any) {
-    if (e.target.scrollWidth - e.target.scrollLeft - e.target.offsetWidth < 350) {
-      this.callGifSearch();
-    }
   }
 
   public onSearch(e: any) {
@@ -48,6 +44,18 @@ export class GiphySearchComponent implements OnInit {
     if (e && e instanceof HTMLElement && e.scrollWidth <= e.clientWidth) {
       this.callGifSearch();
     } 
+  }
+
+  onWheel(event: any): void {
+    console.log(event);
+    this.searchResultsEl.nativeElement.scrollLeft += event.deltaY;
+    event.preventDefault();
+  }
+
+  public onListScroll(e: any) {
+    if (e.target.scrollWidth - e.target.scrollLeft - e.target.offsetWidth < 350) {
+      this.callGifSearch();
+    }
   }
 
   ngOnInit(): void {
