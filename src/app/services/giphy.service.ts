@@ -13,7 +13,7 @@ import { SavedGifsService } from './saved-gifs.service';
 export class GiphyService {
 
   private apiKey: string = 'nmnofz9R8bdcVbFfvjVuWn5nyIRBypul';
-  private searchApiEndpoint: string = `http://api.giphy.com/v1/gifs/search?api_key=${this.apiKey}`;
+  private searchApiEndpoint: string = `https://api.giphy.com/v1/gifs/search?api_key=${this.apiKey}`;
   private lsQueryKey: string = 'search-query';
   private lsPaginationKey: string = 'search-pagination';
 
@@ -21,6 +21,7 @@ export class GiphyService {
 
   public gifList: Array<giphyGif> = [];
   private pagination: any = null;
+  private isFetchedAll: boolean = false;
 
   private lastQuery: string = '';
   private isRequesting: boolean = false;
@@ -32,22 +33,45 @@ export class GiphyService {
   }
 
   public getGifs(query: string = '', limit: number = 15) {
+    console.log('getGifs ->');
+
     if (this.isRequesting && query === this.lastQuery) {
+      console.log('this.isRequesting && query === this.lastQuery');
       return;
     }
-
-    
 
     if (query !== this.lastQuery) {
       this.gifList = [];
       this.pagination = null;
+      this.isFetchedAll = false;
+    }
+
+    if (this.isFetchedAll) {
+      console.log('this.isFetchedAll');
+      return;
     }
 
     this.isRequesting = true;
     this.lastQuery = query;
 
+    let offsetStr = '';
+    if (this.pagination) {
+      const tempOffset = this.pagination.count + this.pagination.offset;
+      const nextOffset = tempOffset > this.pagination.total_count ? this.pagination.total_count : tempOffset;
+      offsetStr = this.pagination ? `&offset=${nextOffset}` : '';
+      limit = nextOffset + limit > this.pagination.total_count ? this.pagination.total_count - nextOffset : limit;
+
+      // in this case we've already fetched all the gifs for current query, so nothing to do here
+      if (limit === 0) {
+        this.isFetchedAll = true;
+        console.log('limit === 0');
+        return;
+      }
+    } else {
+      offsetStr = '';
+    }
+    
     const limitStr = `&limit=${limit}`;
-    const offsetStr = this.pagination ? `&offset=${this.pagination.count + this.pagination.offset}` : '';
 
     let url: string = `${this.searchApiEndpoint}&q=${query}${limitStr}${offsetStr}`;
 

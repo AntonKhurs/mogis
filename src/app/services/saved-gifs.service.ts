@@ -35,16 +35,16 @@ export class SavedGifsService {
     switch (this.sort) {
       case 'title':
         if (this.sortDir === 'asc') {
-          this.processedSavedGifs.sort((a,b) => (a.title < b.title) ? -1 : (a.title > b.title) ? 1 : 0);
+          this.processedSavedGifs.sort((a,b) => (a.title > b.title) ? -1 : (a.title < b.title) ? 1 : 0);
         } else {
-          this.processedSavedGifs.sort((a,b) => (b.title < a.title) ? -1 : (b.title > a.title) ? 1 : 0);
+          this.processedSavedGifs.sort((a,b) => (b.title > a.title) ? -1 : (b.title < a.title) ? 1 : 0);
         }
         break;
       case 'save_date':
         if (this.sortDir === 'asc') {
-          this.processedSavedGifs.sort((a,b) => a.save_date.getTime() - b.save_date.getTime());
-        } else {
           this.processedSavedGifs.sort((a,b) => b.save_date.getTime() - a.save_date.getTime());
+        } else {
+          this.processedSavedGifs.sort((a,b) => a.save_date.getTime() - b.save_date.getTime());
         }
         break;
       default:

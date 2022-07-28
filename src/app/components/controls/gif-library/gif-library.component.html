@@ -1,6 +1,6 @@
 <h2 *ngIf="savedGifsService.rawSavedGifs && savedGifsService.rawSavedGifs.length">Wow, nice taste bro!</h2>
 
-<div *ngIf="savedGifsService.rawSavedGifs && savedGifsService.rawSavedGifs.length"
+<div *ngIf="savedGifsService.rawSavedGifs && savedGifsService.rawSavedGifs.length > 1"
      class="app-saved-gifs-sort-filter">
   <input type="search"
             name="queryInput"
