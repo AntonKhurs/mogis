@@ -44,21 +44,6 @@ export class GifLibraryComponent implements OnInit {
   public downloadGif(gif: savedGif) {
     this.savedGifsService.downloadGif(gif);
     return;
-
-    const headers = new HttpHeaders();
-    this.http.get(gif.gif_url, {headers, responseType: 'blob' as 'json'}).subscribe(
-        (response: any) =>{
-            let dataType = response.type;
-            let binaryData = [];
-            binaryData.push(response);
-            let downloadLink = document.createElement('a');
-            downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
-            if (gif.title)
-                downloadLink.setAttribute('download', gif.id + '.gif');
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-        }
-    )
   }
 
   ngOnInit(): void {

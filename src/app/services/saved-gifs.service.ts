@@ -119,6 +119,7 @@ export class SavedGifsService {
       this.rawSavedGifs.splice(index, 1);
 
       this.saveGIFs();
+      this.applySortAndFilter();
     }
   }
 
